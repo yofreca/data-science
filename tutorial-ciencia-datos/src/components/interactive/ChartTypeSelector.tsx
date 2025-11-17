@@ -122,9 +122,10 @@ export default function ChartTypeSelector() {
   };
 
   const drawLineChart = (ctx: CanvasRenderingContext2D, padding: number, width: number, height: number) => {
+    const canvasHeight = 400; // Total canvas height
     const points = sampleData.map((val, idx) => ({
       x: padding + (idx / (sampleData.length - 1)) * width,
-      y: canvas.height! - padding - (val / 100) * height
+      y: canvasHeight - padding - (val / 100) * height
     }));
 
     // Draw line
@@ -145,12 +146,13 @@ export default function ChartTypeSelector() {
   };
 
   const drawBarChart = (ctx: CanvasRenderingContext2D, padding: number, width: number, height: number) => {
+    const canvasHeight = 400; // Total canvas height
     const barWidth = width / sampleData.length - 10;
 
     sampleData.forEach((val, idx) => {
       const x = padding + (idx / sampleData.length) * width + 5;
       const barHeight = (val / 100) * height;
-      const y = canvas.height! - padding - barHeight;
+      const y = canvasHeight - padding - barHeight;
 
       ctx.fillStyle = "#10b981";
       ctx.fillRect(x, y, barWidth, barHeight);
@@ -162,10 +164,11 @@ export default function ChartTypeSelector() {
   };
 
   const drawScatterPlot = (ctx: CanvasRenderingContext2D, padding: number, width: number, height: number) => {
+    const canvasHeight = 400; // Total canvas height
     // Generate correlated data
     const scatterData = sampleData.map((val, idx) => ({
       x: padding + (idx / sampleData.length) * width + Math.random() * 30,
-      y: canvas.height! - padding - (val / 100) * height + (Math.random() - 0.5) * 40
+      y: canvasHeight - padding - (val / 100) * height + (Math.random() - 0.5) * 40
     }));
 
     ctx.fillStyle = "#8b5cf6";
@@ -177,6 +180,7 @@ export default function ChartTypeSelector() {
   };
 
   const drawHistogram = (ctx: CanvasRenderingContext2D, padding: number, width: number, height: number) => {
+    const canvasHeight = 400; // Total canvas height
     // Create histogram bins
     const bins = 8;
     const binCounts = new Array(bins).fill(0);
@@ -192,7 +196,7 @@ export default function ChartTypeSelector() {
     binCounts.forEach((count, idx) => {
       const x = padding + idx * binWidth;
       const barHeight = (count / maxCount) * height;
-      const y = canvas.height! - padding - barHeight;
+      const y = canvasHeight - padding - barHeight;
 
       ctx.fillStyle = "#f59e0b";
       ctx.fillRect(x, y, binWidth - 2, barHeight);
@@ -204,6 +208,7 @@ export default function ChartTypeSelector() {
   };
 
   const drawBoxPlot = (ctx: CanvasRenderingContext2D, padding: number, width: number, height: number) => {
+    const canvasHeight = 400; // Total canvas height
     const sorted = [...sampleData].sort((a, b) => a - b);
     const q1 = sorted[Math.floor(sorted.length * 0.25)];
     const median = sorted[Math.floor(sorted.length * 0.5)];
@@ -211,7 +216,7 @@ export default function ChartTypeSelector() {
     const min = sorted[0];
     const max = sorted[sorted.length - 1];
 
-    const scale = (val: number) => canvas.height! - padding - (val / 100) * height;
+    const scale = (val: number) => canvasHeight - padding - (val / 100) * height;
 
     const centerX = padding + width / 2;
     const boxWidth = 150;
@@ -268,22 +273,23 @@ export default function ChartTypeSelector() {
   };
 
   const drawLabels = (ctx: CanvasRenderingContext2D, padding: number, width: number, height: number) => {
+    const canvasHeight = 400; // Total canvas height
     ctx.fillStyle = "#1f2937";
     ctx.font = "12px monospace";
     ctx.textAlign = "center";
 
     if (selectedType === "line" || selectedType === "bar") {
       // X-axis labels (first, middle, last)
-      ctx.fillText(categories[0], padding, canvas.height! - padding + 20);
-      ctx.fillText(categories[4], padding + width / 2, canvas.height! - padding + 20);
-      ctx.fillText(categories[9], padding + width, canvas.height! - padding + 20);
+      ctx.fillText(categories[0], padding, canvasHeight - padding + 20);
+      ctx.fillText(categories[4], padding + width / 2, canvasHeight - padding + 20);
+      ctx.fillText(categories[9], padding + width, canvasHeight - padding + 20);
     }
 
     // Y-axis label
     ctx.save();
     ctx.rotate(-Math.PI / 2);
     ctx.textAlign = "center";
-    ctx.fillText("Valores", -canvas.height! / 2, padding - 35);
+    ctx.fillText("Valores", -canvasHeight / 2, padding - 35);
     ctx.restore();
   };
 
