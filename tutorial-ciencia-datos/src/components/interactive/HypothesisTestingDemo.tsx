@@ -18,7 +18,6 @@ export default function HypothesisTestingDemo() {
 
   const trueStdDev = 15;
 
-  // Función de distribución acumulativa normal estándar (aproximación)
   const normalCDF = (z: number): number => {
     const t = 1 / (1 + 0.2316419 * Math.abs(z));
     const d = 0.3989423 * Math.exp(-z * z / 2);
@@ -41,7 +40,6 @@ export default function HypothesisTestingDemo() {
     const standardError = trueStdDev / Math.sqrt(sampleSize);
     const zScore = (sampleMean - nullMean) / standardError;
 
-    // P-valor (prueba de dos colas)
     const pValue = 2 * (1 - normalCDF(Math.abs(zScore)));
     const reject = pValue < alpha;
 
@@ -52,17 +50,16 @@ export default function HypothesisTestingDemo() {
     <div className="glass-effect p-8 rounded-2xl space-y-6">
       <div>
         <h3 className="text-2xl font-bold gradient-text mb-2">
-          Prueba de Hipótesis (Z-test)
+          Prueba de Hipotesis Z-test
         </h3>
         <p className="text-gray-600">
-          Prueba si la media poblacional es diferente del valor hipotético.
+          Prueba si la media poblacional es diferente del valor hipotetico.
         </p>
       </div>
 
-      {/* Hypotheses */}
       <div className="grid md:grid-cols-2 gap-4">
         <div className="p-6 glass-effect rounded-xl">
-          <h4 className="font-bold text-gray-800 mb-3">Hipótesis Nula (H₀)</h4>
+          <h4 className="font-bold text-gray-800 mb-3">Hipotesis Nula H0</h4>
           <p className="text-2xl font-bold text-blue-600">μ = {nullMean}</p>
           <p className="text-sm text-gray-600 mt-2">
             Asumimos que la media poblacional es {nullMean}
@@ -70,19 +67,18 @@ export default function HypothesisTestingDemo() {
         </div>
 
         <div className="p-6 glass-effect rounded-xl">
-          <h4 className="font-bold text-gray-800 mb-3">Hipótesis Alternativa (H₁)</h4>
+          <h4 className="font-bold text-gray-800 mb-3">Hipotesis Alternativa H1</h4>
           <p className="text-2xl font-bold text-purple-600">μ ≠ {nullMean}</p>
           <p className="text-sm text-gray-600 mt-2">
-            La media es diferente de {nullMean} (prueba de dos colas)
+            La media es diferente de {nullMean}
           </p>
         </div>
       </div>
 
-      {/* Parameters */}
       <div className="grid md:grid-cols-3 gap-6">
         <div className="p-4 glass-effect rounded-xl space-y-3">
           <div className="flex justify-between">
-            <label className="font-semibold text-gray-700">H₀: μ =</label>
+            <label className="font-semibold text-gray-700">H0: μ =</label>
             <span className="font-bold text-blue-600">{nullMean}</span>
           </div>
           <input
@@ -127,10 +123,9 @@ export default function HypothesisTestingDemo() {
         </div>
       </div>
 
-      {/* Hidden truth */}
       <div className="p-4 bg-yellow-50 border-2 border-yellow-300 rounded-xl">
         <h4 className="font-bold text-yellow-800 mb-2">
-          🔍 Media Verdadera (oculta en la práctica): μ = {trueMean}
+          Media Verdadera (oculta): μ = {trueMean}
         </h4>
         <p className="text-sm text-gray-700 mb-2">
           Ajusta la media verdadera para simular diferentes escenarios:
@@ -145,7 +140,6 @@ export default function HypothesisTestingDemo() {
         />
       </div>
 
-      {/* Run Test Button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -153,10 +147,9 @@ export default function HypothesisTestingDemo() {
         className="w-full btn-primary flex items-center justify-center gap-2"
       >
         <Play className="w-5 h-5" />
-        Ejecutar Prueba de Hipótesis
+        Ejecutar Prueba de Hipotesis
       </motion.button>
 
-      {/* Results */}
       {result && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -169,23 +162,19 @@ export default function HypothesisTestingDemo() {
             <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white">
               <p className="text-xs font-semibold opacity-90 mb-1">Media Muestral</p>
               <p className="text-2xl font-bold">{result.sampleMean.toFixed(2)}</p>
-              <p className="text-xs opacity-80">x̄</p>
             </div>
 
             <div className="p-4 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white">
-              <p className="text-xs font-semibold opacity-90 mb-1">Estadístico Z</p>
+              <p className="text-xs font-semibold opacity-90 mb-1">Estadistico Z</p>
               <p className="text-2xl font-bold">{result.zScore.toFixed(3)}</p>
-              <p className="text-xs opacity-80">distancia en desv. std</p>
             </div>
 
             <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 text-white">
               <p className="text-xs font-semibold opacity-90 mb-1">P-valor</p>
               <p className="text-2xl font-bold">{result.pValue.toFixed(4)}</p>
-              <p className="text-xs opacity-80">prob bajo H₀</p>
             </div>
           </div>
 
-          {/* Decision */}
           <div className={`p-6 rounded-xl border-4 ${
             result.reject
               ? 'bg-red-50 border-red-500'
@@ -194,7 +183,7 @@ export default function HypothesisTestingDemo() {
             <h4 className={`font-bold text-xl mb-3 ${
               result.reject ? 'text-red-800' : 'text-green-800'
             }`}>
-              {result.reject ? '❌ Rechazamos H₀' : '✅ No Rechazamos H₀'}
+              {result.reject ? 'Rechazamos H0' : 'No Rechazamos H0'}
             </h4>
 
             <div className="space-y-2 text-sm">
@@ -205,24 +194,24 @@ export default function HypothesisTestingDemo() {
               {result.reject ? (
                 <>
                   <p className="text-gray-700">
-                    <strong>Conclusión:</strong> Hay evidencia estadística suficiente para rechazar
-                    la hipótesis nula. Los datos sugieren que la media poblacional es
+                    <strong>Conclusion:</strong> Hay evidencia estadistica suficiente para rechazar
+                    la hipotesis nula. Los datos sugieren que la media poblacional es
                     diferente de {nullMean}.
                   </p>
                   <p className="text-gray-600 italic">
-                    (La media verdadera era {trueMean}, ¡detectamos la diferencia!)
+                    La media verdadera era {trueMean}
                   </p>
                 </>
               ) : (
                 <>
                   <p className="text-gray-700">
-                    <strong>Conclusión:</strong> No hay evidencia suficiente para rechazar
-                    la hipótesis nula. Los datos son consistentes con μ = {nullMean}.
+                    <strong>Conclusion:</strong> No hay evidencia suficiente para rechazar
+                    la hipotesis nula. Los datos son consistentes con μ = {nullMean}.
                   </p>
                   <p className="text-gray-600 italic">
                     {trueMean === nullMean
-                      ? '(La media verdadera era efectivamente ' + trueMean + ')'
-                      : '(La media verdadera era ' + trueMean + ', pero la diferencia no fue detectada - posible Error Tipo II)'
+                      ? 'La media verdadera era efectivamente ' + trueMean
+                      : 'La media verdadera era ' + trueMean + ', diferencia no detectada'
                     }
                   </p>
                 </>
@@ -230,20 +219,19 @@ export default function HypothesisTestingDemo() {
             </div>
           </div>
 
-          {/* Errors explanation */}
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-4 glass-effect rounded-xl">
               <h5 className="font-bold text-red-600 mb-2">Error Tipo I (α)</h5>
               <p className="text-sm text-gray-700">
-                Rechazar H₀ cuando es verdadera. Nivel de significancia α = {alpha}
-                es la probabilidad máxima de cometer este error.
+                Rechazar H0 cuando es verdadera. Nivel de significancia α = {alpha}
+                es la probabilidad maxima de cometer este error.
               </p>
             </div>
 
             <div className="p-4 glass-effect rounded-xl">
               <h5 className="font-bold text-blue-600 mb-2">Error Tipo II (β)</h5>
               <p className="text-sm text-gray-700">
-                No rechazar H₀ cuando es falsa. La potencia de la prueba (1-β)
+                No rechazar H0 cuando es falsa. La potencia de la prueba (1-β)
                 aumenta con el tamaño de muestra.
               </p>
             </div>
@@ -251,13 +239,10 @@ export default function HypothesisTestingDemo() {
         </motion.div>
       )}
 
-      {/* Info */}
       <div className="p-4 glass-effect rounded-xl">
         <p className="text-sm text-gray-700">
-          <strong>💡 P-valor:</strong> La probabilidad de obtener resultados tan extremos
-          (o más) si H₀ fuera cierta. Si p-valor < α, rechazamos H₀. Es importante
-          recordar que "no rechazar" no significa "aceptar" - solo que no hay evidencia
-          suficiente para rechazar.
+          <strong>P-valor:</strong> La probabilidad de obtener resultados tan extremos
+          (o mas) si H0 fuera cierta. Si p-valor menor que α, rechazamos H0.
         </p>
       </div>
     </div>
