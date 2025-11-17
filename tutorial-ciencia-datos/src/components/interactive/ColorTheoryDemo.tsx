@@ -145,7 +145,9 @@ export default function ColorTheoryDemo() {
         <h3 className="font-bold text-gray-800 mb-4">Ejemplo de Visualización</h3>
         <div className="space-y-2">
           {selected.colors.map((color, idx) => {
-            const width = 40 + Math.random() * 60;
+            // Use predefined values instead of Math.random() to avoid hydration errors
+            const predefinedWidths = [85, 72, 93, 65, 88, 79];
+            const width = predefinedWidths[idx % predefinedWidths.length];
             return (
               <div key={idx} className="flex items-center gap-3">
                 <div className="w-24 text-sm text-gray-600">Categoría {idx + 1}</div>
@@ -156,7 +158,7 @@ export default function ColorTheoryDemo() {
                     width: `${width}%`
                   }}
                 />
-                <div className="text-sm text-gray-500 font-mono">{width.toFixed(0)}%</div>
+                <div className="text-sm text-gray-500 font-mono">{width}%</div>
               </div>
             );
           })}
